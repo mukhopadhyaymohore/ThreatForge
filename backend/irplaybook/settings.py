@@ -6,8 +6,9 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'dev-secret-key')
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = False
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://threatforge-coq9.onrender.com']
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -47,10 +48,3 @@ STATICFILES_DIRS = [BASE_DIR.parent / 'frontend']
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer'],
 }
-
-import dj_database_url
-
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
-
-# Production static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
