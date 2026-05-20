@@ -39,7 +39,7 @@ def classify_incident(text: str) -> dict:
             break
     org_size = 'mid'
     for size, patterns in ORG_SIZE_PATTERNS.items():
-        if any(p in text_only for p in patterns):
+        if any(p in text_lower for p in patterns):
             org_size = size
             break
     confidence = min(100, scores.get(incident_type, 0) * 20 + 40)
