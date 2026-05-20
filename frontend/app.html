@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+  <title>Generator — THREATFORGE</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="app-body">
+
+  <div class="bg-grid"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <img src="/static/logo.svg" width="20" height="20" alt="THREATFORGE"/>
+        <span class="brand-name">THREATFORGE</span>
+        <!-- <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+          <polygon points="11,2 20,18 2,18" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+          <line x1="11" y1="9" x2="11" y2="13" stroke="#ef4444" stroke-width="1.5"/>
+          <circle cx="11" cy="15.5" r="0.8" fill="#ef4444"/>
+        </svg>
+        <span class="brand-name">THREATFORGE</span> -->
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/app/" class="nav-link active">Generator</a>
+        <a href="/#how" class="nav-link">How It Works</a>
+        <a href="/#about" class="nav-link">About</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span class="status-text">BACKEND CONNECTED</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- Header -->
+      <div class="sb-section">
+        <div class="sb-label">
+          <span class="sb-num">01</span>INCIDENT DESCRIPTION
+        </div>
+        <textarea
+          id="incident-input"
+          placeholder="Describe the security incident in detail...
+
+Example: Our SOC detected unusual outbound traffic from 3 Windows servers in finance at 2AM. Files on shared drives are encrypted with .locked extension. Ransom note demanding 50 BTC. Mid-size financial firm, ~400 employees."
+        ></textarea>
+        <div class="textarea-meta">
+          <span class="char-count" id="char-count">0 / 2000</span>
+          <span class="textarea-hint">More detail = better playbook</span>
+        </div>
+      </div>
+
+      <!-- Quick samples -->
+      <div class="sb-section">
+        <div class="sb-label">
+          <span class="sb-num">02</span>QUICK SAMPLES
+        </div>
+        <div class="sample-grid">
+          <button class="sample-btn" data-sample="ransomware">🔒 Ransomware</button>
+          <button class="sample-btn" data-sample="phishing">🎣 Phishing</button>
+          <button class="sample-btn" data-sample="ddos">💥 DDoS</button>
+          <button class="sample-btn" data-sample="breach">💾 Data Breach</button>
+          <button class="sample-btn" data-sample="insider">👤 Insider</button>
+          <button class="sample-btn" data-sample="malware">🦠 Malware</button>
+        </div>
+      </div>
+
+      <!-- Classification result -->
+      <div class="sb-section" id="class-section" style="display:none">
+        <div class="sb-label">
+          <span class="sb-num">03</span>CLASSIFICATION
+        </div>
+        <div class="class-result" id="class-result"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="sb-actions">
+        <button class="btn-classify" id="classify-btn">
+          🔍 ANALYSE INCIDENT
+        </button>
+        <button class="btn-gen" id="generate-btn">
+          ⚡ GENERATE PLAYBOOK
+        </button>
+      </div>
+
+      <!-- Model info -->
+      <div class="model-info">
+        <div class="mi-row">
+          <span class="mi-label">AI MODEL</span>
+          <span class="mi-val">Llama 3.3 70B</span>
+        </div>
+        <div class="mi-row">
+          <span class="mi-label">NLP ENGINE</span>
+          <span class="mi-val">spaCy en_core_web_sm</span>
+        </div>
+        <div class="mi-row">
+          <span class="mi-label">BACKEND</span>
+          <span class="mi-val">Django REST</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN OUTPUT -->
+    <main class="main-output">
+
+      <!-- Idle -->
+      <div class="idle-state" id="idle-state">
+        <div class="idle-rings">
+          <div class="ir ir1"></div>
+          <div class="ir ir2"></div>
+          <div class="ir ir3"></div>
+          <div class="ir-core">
+            <svg width="32" height="32" viewBox="0 0 22 22" fill="none">
+              <polygon points="11,2 20,18 2,18" stroke="#ef4444" stroke-width="1.2" fill="none"/>
+              <line x1="11" y1="9" x2="11" y2="13" stroke="#ef4444" stroke-width="1.2"/>
+              <circle cx="11" cy="15.5" r="0.8" fill="#ef4444"/>
+            </svg>
+          </div>
+        </div>
+        <h2 class="idle-h2">THREATFORGE Ready</h2>
+        <p class="idle-p">Select a sample incident or describe your own on the left, then click Generate Playbook.</p>
+        <div class="idle-caps">
+          <div class="ic-item"><span class="ic-icon">📋</span><span>5-Phase Response Plan</span></div>
+          <div class="ic-item"><span class="ic-icon">👥</span><span>Role-based Step Ownership</span></div>
+          <div class="ic-item"><span class="ic-icon">🔍</span><span>IOC Checklist</span></div>
+          <div class="ic-item"><span class="ic-icon">📨</span><span>Communication Templates</span></div>
+          <div class="ic-item"><span class="ic-icon">⚖️</span><span>Regulatory Mapping</span></div>
+          <div class="ic-item"><span class="ic-icon">🔧</span><span>Tools & Commands</span></div>
+          <div class="ic-item"><span class="ic-icon">📊</span><span>Lessons Learned Prompts</span></div>
+          <div class="ic-item"><span class="ic-icon">💾</span><span>JSON / MD Export</span></div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading-state" id="loading-state" style="display:none">
+        <div class="load-visual">
+          <div class="lv-ring lv1"></div>
+          <div class="lv-ring lv2"></div>
+          <div class="lv-ring lv3"></div>
+          <span class="lv-icon">⚡</span>
+        </div>
+        <div class="load-log" id="load-log">
+          <div class="ll-item active" id="ll0">[ THREATFORGE ] Initialising analysis engine...</div>
+          <div class="ll-item" id="ll1">[ NLP ] Tokenising incident description...</div>
+          <div class="ll-item" id="ll2">[ CLASSIFIER ] Detecting incident type and severity...</div>
+          <div class="ll-item" id="ll3">[ AI ] Querying Claude for response phases...</div>
+          <div class="ll-item" id="ll4">[ AI ] Building IOC checklist and tool list...</div>
+          <div class="ll-item" id="ll5">[ AI ] Drafting communication templates...</div>
+          <div class="ll-item" id="ll6">[ FORMATTER ] Structuring final playbook...</div>
+          <div class="ll-item" id="ll7">[ DONE ] Playbook ready.</div>
+        </div>
+      </div>
+
+      <!-- Playbook output -->
+      <div id="playbook-wrap" style="display:none">
+
+        <!-- Topbar -->
+        <div class="pb-topbar">
+          <div class="pbt-left">
+            <span class="pbt-badge" id="pbt-badge"></span>
+            <div>
+              <div class="pbt-title">INCIDENT RESPONSE PLAYBOOK</div>
+              <div class="pbt-sub" id="pbt-sub"></div>
+            </div>
+          </div>
+          <div class="pbt-right">
+            <button class="pbt-btn" onclick="exportJSON()">↓ JSON</button>
+            <button class="pbt-btn" onclick="exportMD()">↓ MD</button>
+            <button class="pbt-btn pbt-reset" onclick="resetApp()">✕ RESET</button>
+          </div>
+        </div>
+
+        <!-- Summary row -->
+        <div class="summary-row" id="summary-row"></div>
+
+        <!-- Tabs -->
+        <div class="tabs-row">
+          <button class="tab active" data-tab="phases" onclick="switchTab(this)">⚡ PHASES</button>
+          <button class="tab" data-tab="ioc" onclick="switchTab(this)">🔍 IOC</button>
+          <button class="tab" data-tab="comms" onclick="switchTab(this)">📨 COMMS</button>
+          <button class="tab" data-tab="regulatory" onclick="switchTab(this)">⚖️ REGULATORY</button>
+          <button class="tab" data-tab="tools" onclick="switchTab(this)">🔧 TOOLS</button>
+          <button class="tab" data-tab="lessons" onclick="switchTab(this)">📊 LESSONS</button>
+        </div>
+
+        <!-- Tab panels -->
+        <div class="tab-panel active" id="panel-phases"></div>
+        <div class="tab-panel" id="panel-ioc" style="display:none"></div>
+        <div class="tab-panel" id="panel-comms" style="display:none"></div>
+        <div class="tab-panel" id="panel-regulatory" style="display:none"></div>
+        <div class="tab-panel" id="panel-tools" style="display:none"></div>
+        <div class="tab-panel" id="panel-lessons" style="display:none"></div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

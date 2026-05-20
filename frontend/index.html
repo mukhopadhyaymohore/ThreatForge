@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+  <title>THREATFORGE</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="landing-body">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <img src="/static/logo.svg" width="20" height="20" alt="THREATFORGE"/>
+        <span class="brand-name">THREATFORGE</span>
+      </a>
+      <!-- <div class="brand">
+        <img src="/static/logo.svg" width="22" height="22" alt="THREATFORGE"/>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <polygon points="11,2 20,18 2,18" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+          <line x1="11" y1="9" x2="11" y2="13" stroke="#ef4444" stroke-width="1.5"/>
+          <circle cx="11" cy="15.5" r="0.8" fill="#ef4444"/>
+        </svg>
+        <span class="brand-name">THREATFORGE</span>
+      </div> -->
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="/app/" class="nav-link">Generator</a>
+        <a href="#how" class="nav-link">How It Works</a>
+        <a href="#coverage" class="nav-link">Coverage</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
+      <a href="/app/" class="nav-cta">
+        <span class="cta-dot"></span>
+        LAUNCH GENERATOR
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO: fullscreen threat map -->
+  <section class="hero-fullscreen">
+    <canvas id="threat-canvas"></canvas>
+
+    <!-- Threat ticker tape -->
+    <div class="ticker-bar">
+      <span class="ticker-label">LIVE THREATS</span>
+      <div class="ticker-track" id="ticker-track"></div>
+    </div>
+
+    <!-- Hero content overlay -->
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          AI-POWERED INCIDENT RESPONSE
+          <span class="eyebrow-sep">·</span>
+          REAL-TIME PLAYBOOK GENERATION
+        </div>
+        <h1 class="hero-h1">
+          THREAT<span class="h1-accent">FORGE</span>
+        </h1>
+        <p class="hero-sub">
+          Describe any security incident. Get a structured, AI-generated
+          incident response playbook in seconds — phase-by-phase, with
+          step ownership, IOC checklists, and regulatory guidance.
+        </p>
+        <div class="hero-btns">
+          <a href="/app/" class="btn-launch">
+            ⚡ GENERATE PLAYBOOK
+          </a>
+          <a href="#how" class="btn-learn">SEE HOW IT WORKS ↓</a>
+        </div>
+
+        <!-- Live counters -->
+        <div class="hero-counters">
+          <div class="counter-item">
+            <span class="counter-val" id="c-incidents">0</span>
+            <span class="counter-label">Incidents Classified</span>
+          </div>
+          <div class="counter-sep"></div>
+          <div class="counter-item">
+            <span class="counter-val" id="c-phases">0</span>
+            <span class="counter-label">Response Phases</span>
+          </div>
+          <div class="counter-sep"></div>
+          <div class="counter-item">
+            <span class="counter-val" id="c-types">0</span>
+            <span class="counter-label">Incident Types</span>
+          </div>
+          <div class="counter-sep"></div>
+          <div class="counter-item">
+            <span class="counter-val" id="c-steps">0</span>
+            <span class="counter-label">Avg Steps/Playbook</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side threat panel -->
+      <div class="threat-panel">
+        <div class="tp-header">
+          <span class="tp-dot"></span>
+          ACTIVE THREAT INDICATORS
+        </div>
+        <div class="tp-feed" id="tp-feed"></div>
+        <div class="tp-footer">
+          <span>AI MODEL</span>
+          <span class="tp-model">Llama 3.3 70B</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-ind">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="section-inner">
+      <div class="section-eyebrow">PROCESS</div>
+      <h2 class="section-h2">How THREATFORGE Works</h2>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num">01</div>
+          <div class="how-icon">📝</div>
+          <h3>Describe</h3>
+          <p>Write what happened in plain language. No security jargon needed — the more context, the sharper the playbook.</p>
+          <div class="how-tag">Natural Language Input</div>
+        </div>
+        <div class="how-connector"><div class="conn-line"></div><div class="conn-arrow">→</div></div>
+        <div class="how-card">
+          <div class="how-num">02</div>
+          <div class="how-icon">🧠</div>
+          <h3>Classify</h3>
+          <p>spaCy NLP engine identifies incident type, severity level, and organisation profile automatically from your description.</p>
+          <div class="how-tag">NLP Classification</div>
+        </div>
+        <div class="how-connector"><div class="conn-line"></div><div class="conn-arrow">→</div></div>
+        <div class="how-card">
+          <div class="how-num">03</div>
+          <div class="how-icon">⚡</div>
+          <h3>Generate</h3>
+          <p>Llama 3.3 70B builds a complete 5-phase playbook — step ownership, priority levels, tools, IOC checklist, comms templates.</p>
+          <div class="how-tag">Llama 3.3 70B Generation</div>
+        </div>
+        <div class="how-connector"><div class="conn-line"></div><div class="conn-arrow">→</div></div>
+        <div class="how-card">
+          <div class="how-num">04</div>
+          <div class="how-icon">💾</div>
+          <h3>Export</h3>
+          <p>Download your playbook as JSON or Markdown. Share instantly with your SOC team, CISO, or legal counsel.</p>
+          <div class="how-tag">JSON / Markdown Export</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERAGE -->
+  <section class="coverage-section" id="coverage">
+    <div class="section-inner">
+      <div class="section-eyebrow">COVERAGE</div>
+      <h2 class="section-h2">Incident Types</h2>
+      <p class="section-sub">THREATFORGE generates tailored playbooks for 8 major incident categories, each with specific detection indicators, containment strategies, and regulatory mappings.</p>
+      <div class="coverage-grid">
+        <div class="cov-card" style="--acc:#ef4444">
+          <div class="cov-top">
+            <span class="cov-icon">🔒</span>
+            <span class="cov-sev sev-critical">CRITICAL</span>
+          </div>
+          <div class="cov-name">Ransomware</div>
+          <div class="cov-desc">File encryption, lateral movement, ransom demands, backup destruction</div>
+          <div class="cov-tags"><span>Encryption</span><span>BTC Demand</span><span>Lateral Move</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#f59e0b">
+          <div class="cov-top">
+            <span class="cov-icon">🎣</span>
+            <span class="cov-sev sev-high">HIGH</span>
+          </div>
+          <div class="cov-name">Phishing</div>
+          <div class="cov-desc">Credential harvesting, spear phishing, BEC, fake login pages</div>
+          <div class="cov-tags"><span>Email Fraud</span><span>Cred Harvest</span><span>BEC</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#3b82f6">
+          <div class="cov-top">
+            <span class="cov-icon">💥</span>
+            <span class="cov-sev sev-high">HIGH</span>
+          </div>
+          <div class="cov-name">DDoS</div>
+          <div class="cov-desc">Volumetric attacks, service disruption, botnet floods, bandwidth exhaustion</div>
+          <div class="cov-tags"><span>Traffic Flood</span><span>Botnet</span><span>Outage</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#8b5cf6">
+          <div class="cov-top">
+            <span class="cov-icon">💾</span>
+            <span class="cov-sev sev-critical">CRITICAL</span>
+          </div>
+          <div class="cov-name">Data Breach</div>
+          <div class="cov-desc">PII exposure, database exfiltration, S3 misconfig, GDPR implications</div>
+          <div class="cov-tags"><span>PII Leak</span><span>Exfil</span><span>GDPR</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#f59e0b">
+          <div class="cov-top">
+            <span class="cov-icon">👤</span>
+            <span class="cov-sev sev-high">HIGH</span>
+          </div>
+          <div class="cov-name">Insider Threat</div>
+          <div class="cov-desc">Privilege abuse, unauthorized data downloads, rogue admin activity</div>
+          <div class="cov-tags"><span>Priv Abuse</span><span>Data Theft</span><span>Rogue</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#ef4444">
+          <div class="cov-top">
+            <span class="cov-icon">🦠</span>
+            <span class="cov-sev sev-high">HIGH</span>
+          </div>
+          <div class="cov-name">Malware</div>
+          <div class="cov-desc">Trojans, rootkits, spyware, keyloggers, backdoors, worms</div>
+          <div class="cov-tags"><span>Trojan</span><span>Rootkit</span><span>Backdoor</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#06b6d4">
+          <div class="cov-top">
+            <span class="cov-icon">⚡</span>
+            <span class="cov-sev sev-critical">CRITICAL</span>
+          </div>
+          <div class="cov-name">Zero Day</div>
+          <div class="cov-desc">Unknown vulnerabilities, unpatched exploits, novel attack vectors</div>
+          <div class="cov-tags"><span>0-Day</span><span>Unpatched</span><span>Novel</span></div>
+        </div>
+        <div class="cov-card" style="--acc:#10b981">
+          <div class="cov-top">
+            <span class="cov-icon">🎭</span>
+            <span class="cov-sev sev-medium">MEDIUM</span>
+          </div>
+          <div class="cov-name">Social Engineering</div>
+          <div class="cov-desc">Vishing, pretexting, impersonation, physical tailgating</div>
+          <div class="cov-tags"><span>Vishing</span><span>Pretext</span><span>Impersonate</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="output-section">
+    <div class="section-inner">
+      <div class="section-eyebrow">OUTPUT</div>
+      <h2 class="section-h2">What the AI Generates</h2>
+      <div class="output-grid">
+        <div class="out-item">
+          <div class="out-icon">📋</div>
+          <div class="out-info">
+            <div class="out-title">5-Phase Response Plan</div>
+            <div class="out-desc">Identification → Containment → Eradication → Recovery → Post-Incident, each with timed objectives</div>
+          </div>
+        </div>
+        <div class="out-item">
+          <div class="out-icon">👥</div>
+          <div class="out-info">
+            <div class="out-title">Step Ownership</div>
+            <div class="out-desc">Every action assigned to SOC Analyst, IR Lead, CISO, Legal, PR, or System Admin</div>
+          </div>
+        </div>
+        <div class="out-item">
+          <div class="out-icon">🔍</div>
+          <div class="out-info">
+            <div class="out-title">IOC Checklist</div>
+            <div class="out-desc">Indicators of Compromise specific to the detected incident type and attack vector</div>
+          </div>
+        </div>
+        <div class="out-item">
+          <div class="out-icon">📨</div>
+          <div class="out-info">
+            <div class="out-title">Communication Templates</div>
+            <div class="out-desc">Pre-written messages for Internal IT, Executives, Legal, Customers, and Regulators</div>
+          </div>
+        </div>
+        <div class="out-item">
+          <div class="out-icon">⚖️</div>
+          <div class="out-info">
+            <div class="out-title">Regulatory Guidance</div>
+            <div class="out-desc">GDPR, HIPAA, PCI-DSS, SOX, and other applicable reporting requirements flagged automatically</div>
+          </div>
+        </div>
+        <div class="out-item">
+          <div class="out-icon">🔧</div>
+          <div class="out-info">
+            <div class="out-title">Tools & Commands</div>
+            <div class="out-desc">Specific security tools, terminal commands, and forensic procedures for each step</div>
+          </div>
+        </div>
+      </div>
+      <div class="output-cta">
+        <a href="/app/" class="btn-launch">⚡ TRY IT NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="section-inner about-inner">
+      <div class="about-left">
+        <div class="section-eyebrow">ABOUT</div>
+        <h2 class="section-h2">Built for the Frontline</h2>
+        <p class="about-p">THREATFORGE was built to solve a real problem: when a security incident hits, teams waste critical minutes searching for response templates or building playbooks from scratch. Every second counts.</p>
+        <p class="about-p">The system combines spaCy NLP for rapid incident classification with Llama 3.3 70B for contextual, detailed playbook generation. The result is a structured, actionable response plan tailored to your specific incident, severity, and organisation size — generated in under 10 seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
+          <polygon points="11,2 20,18 2,18" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+          <line x1="11" y1="9" x2="11" y2="13" stroke="#ef4444" stroke-width="1.5"/>
+          <circle cx="11" cy="15.5" r="0.8" fill="#ef4444"/>
+        </svg>
+        <span>THREATFORGE</span>
+      </div>
+      <span class="footer-copy">© 2026 @mehmarvelous</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="app.html">Generator</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/landing.js"></script>
+</body>
+</html>
